@@ -1,68 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:translator/papago.dart';
+import 'package:translator/selectLang.dart';
+import 'package:translator/translatePage.dart';
+
+import 'mainPage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  static const String homeRoute = '/';
+  static const String translateRoute = '/translatepage';
+  static const String selectLangRoute = '/translatepage/selectLang';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Colors.white,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: homeRoute,
+      routes: {
+        homeRoute: (context) => MainPage(),
+        translateRoute: (context) => TranslatePage(),
+        selectLangRoute: (context) => SelectLang(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+class Routes {
+  static goHome(BuildContext context){
+    Navigator.popUntil(context, ModalRoute.withName(MyApp.homeRoute));
+  }
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  static goTranslate(BuildContext context){
+    Navigator.pushNamed(context, MyApp.translateRoute);
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
-  Future<String> text;
-  final myController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<String>(
-        // future 변수에 Future<> 형식으로 데이터를 받는 변수 설정
-        future: text,
-        builder: (context, snapshot){
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // snapshot.data 를 통해서 번역된 String 받을 수 있음
-                  Text(snapshot.data?? "null"),
-                  TextField(
-                    controller: myController,
-                  ),
-                  RaisedButton(
-                    onPressed: (){
-                      setState(() {
-                        text = Papago.translateText(myController.text);
-                      });
-                    },
-                  )
-                ],
-              ),
-            )
-          );
-        },
-      ),
+  static goSelectLang(BuildContext context, bool isSource, String currentLang){
+    Navigator.pushNamed(
+        context,
+        MyApp.selectLangRoute,
+        arguments: [isSource, currentLang],
     );
+  }
+
+  static goBack(BuildContext context){
+//    Navigator.pushNamedAndRemoveUntil(context, MyApp.translateRoute, (route) => false, arguments: [isSource, selectLang]);
+    Navigator.pushNamed(context, MyApp.translateRoute);
   }
 }
