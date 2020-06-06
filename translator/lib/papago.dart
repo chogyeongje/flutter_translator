@@ -14,7 +14,7 @@ class Papago{
   static const Map<String, String> supportLanguages = {
     "한국어": "ko",
     "영어": "en",
-    "중국어 같체": "zh-CN",
+    "중국어 간체": "zh-CN",
     "중국어 번체": "zh-TW",
     "스페인어": "es",
     "프랑스어": "fr",

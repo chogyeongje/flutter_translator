@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         translateRoute: (context) => TranslatePage(),
         selectLangRoute: (context) => SelectLang(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -48,7 +49,6 @@ class Routes {
   }
 
   static goBack(BuildContext context){
-//    Navigator.pushNamedAndRemoveUntil(context, MyApp.translateRoute, (route) => false, arguments: [isSource, selectLang]);
-    Navigator.pushNamed(context, MyApp.translateRoute);
+    Navigator.pop(context);
   }
 }

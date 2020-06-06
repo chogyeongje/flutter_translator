@@ -88,7 +88,7 @@ class _TranslatePageState extends State<TranslatePage> {
                         ),
                       ),
                       Text(
-                        translatedText?? "null",
+                        translatedText ?? "null",
                         style: TextStyle(fontSize: 20),
                       )
                     ],
